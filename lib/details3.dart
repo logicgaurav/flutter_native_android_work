@@ -299,7 +299,7 @@ class _MyAppState extends State<SecondRoute> {
                                        ),
 
                                        Container(
-                                          height: 500,
+                                          height: MediaQuery.of(context).size.height,
                                           //color: Colors.blue[100],
 
                                           child: Center(child: AndroidView(viewType: "view1")),
