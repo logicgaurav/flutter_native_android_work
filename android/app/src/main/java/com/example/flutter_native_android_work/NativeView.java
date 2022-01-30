@@ -1,119 +1,230 @@
 package com.example.flutter_native_android_work;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.example.flutter_native_android_work.R;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.npaw.youbora.lib6.exoplayer2.Exoplayer2Adapter;
-import com.npaw.youbora.lib6.plugin.Options;
-import com.npaw.youbora.lib6.plugin.Plugin;
-//import com.pubmatic.sdk.common.POBError;
-//import com.pubmatic.sdk.openwrap.banner.POBBannerView;
-import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPBannerEventHandler;
+import com.vidgyor.livemidroll.callbacks.VidExoPlayerCallBack;
+import com.vidgyor.livemidroll.vidgyorPlayerManager.PlayerManager;
+import com.vidgyor.model.VidgyorYouboraModel;
 
 import java.util.Map;
 
+import io.flutter.Log;
 import io.flutter.plugin.platform.PlatformView;
 
 class NativeView implements PlatformView {
-    private final LinearLayout layout;
-    LinearLayout lin_lay;
-    // private SimpleExoPlayer player;
-    // private DefaultTrackSelector trackSelector;
-    SimpleExoPlayer absPlayerInternal;
-    // PlayerView pvMain;
+
+
+    private PlayerView playerView;
+    private PlayerManager player;
+    private boolean isInLandscape = false;
+    private static boolean isInPIPMode = false;
+    // private ConstraintLayout parentPlayerView;
+    Context mContext;
+    RelativeLayout rel_lay;
 
     NativeView(Context context, int id, Map<String, Object> creationParams) {
-        layout = new LinearLayout(context);
-        // textView.setTextSize(42);
-        layout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        // layout.setOrientation(FrameLayout.VERTICAL);
+
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.activity_mainn, null);
-        PlayerView playerView = v.findViewById(R.id.player_view);
-        lin_lay = v.findViewById(R.id.lin_lay);
+        View v = inflater.inflate(R.layout.activity_livetv, null);
+        rel_lay = v.findViewById(R.id.rel_lay);
+        mContext = context;
 
-        lin_lay.setBackgroundColor(context.getResources().getColor(R.color.browser_actions_divider_color));
+      //  String channelName = mContext.getString(R.string.vid_channel_id_english);
+       // channelName = getVidgyorLiveTVChannelId(mContext, "zeenews");
 
-        String CONTENT_URL = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4";
+        // ZeeNewsApplication.getInstance().liveTVActivity = this;
 
-        int appNameStringRes = R.string.app_name;
+//        if (ZeeNewsApplication.getInstance() != null && ZeeNewsApplication.getInstance().myChannel != null
+//                && ZeeNewsApplication.getInstance().myChannel.getLanguageName() != null) {
+      //  channelName = "zeebusiness";
+        //   }
 
-        // pvMain = findViewById(R.id.pv_main); // creating player view
+        playerView = v.findViewById(R.id.vid_player_view);
+        //player = new PlayerManager(ActivityLiveTvVideoNew.this, playerView, channelName);
 
-        TrackSelector trackSelectorDef = new DefaultTrackSelector();
-        // absPlayerInternal = ExoPlayerFactory.newSimpleInstance(this, trackSelectorDef); //creating a player instance
-        absPlayerInternal = (new SimpleExoPlayer.Builder(context))
-                .setTrackSelector(trackSelectorDef).build();
+        // if (ZeeNewsApplication.getInstance() != null) {
+        //     if (!ZeeNewsApplication.getInstance().languageChange) {
+//        if(player!=null){
+            player = new PlayerManager(mContext,
+                    playerView, "zeenewsenglish", null);
+//        }else {
+//            Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show();
+//        }
 
-        String userAgent = Util.getUserAgent(context, "sdfvf");
-        DefaultDataSourceFactory defdataSourceFactory = new DefaultDataSourceFactory(context, userAgent);
-        Uri uriOfContentUrl = Uri.parse(CONTENT_URL);
-        MediaSource mediaSource = new ProgressiveMediaSource.Factory(defdataSourceFactory).createMediaSource(uriOfContentUrl);  // creating a media source
+//            }
+//        }
 
-        absPlayerInternal.prepare(mediaSource);
-        absPlayerInternal.setPlayWhenReady(true); // start loading video and play it at the moment a chunk of it is available offline
+        // parentPlayerView = v.findViewById(R.id.constraintLayout);
 
-        playerView.setPlayer(absPlayerInternal); // attach surface to the view
+//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) parentPlayerView.getLayoutParams();
+//        lp.height = (int) (getDisplayMetrics((Activity) context).heightPixels * 0.32);
+//        parentPlayerView.setLayoutParams(lp);
+//        parentPlayerView.setMaxHeight((int) (getDisplayMetrics((Activity) context).heightPixels * 0.32));
+
+        if (player != null) {
+            player.isInLandscape(false, false);
+            player.setExoPlayerCallBack(new VidExoPlayerCallBack() {
+                @Override
+                public void onLandScape() {
+
+                }
+
+                @Override
+                public void onPortrait() {
+
+                }
+
+                @Override
+                public void onPlayerPause() {
+
+                }
+
+                @Override
+                public void onPlayerPlay() {
+
+                }
+
+                @Override
+                public void onPlayerStateChanged(boolean playWhenReady, String playbackState) {
+
+                }
+
+                @Override
+                public void onLoadingChanged(boolean isLoading) {
+
+                }
+
+                @Override
+                public void onPlayerError(ExoPlaybackException error) {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.d("hfhmj", e.getMessage());
+                }
+
+                @Override
+                public void onPreRollAdStarted() {
+
+                }
+
+                @Override
+                public void onPreRollAdCompleted() {
+
+                }
+
+                @Override
+                public void onPreRollAdSkipped() {
+                }
+
+                @Override
+                public void onMidRollAdStarted() {
+
+                }
+
+                @Override
+                public void onMidRollAdCompleted() {
+
+                }
+
+                @Override
+                public void onMidRollAdSkipped() {
+
+                }
 
 
-/*//Taboola Start
-        TaboolaWidget
-                taboolaWidget = new TaboolaWidget(context);
-        int height = SdkDetailsHelper.getDisplayHeight(taboolaWidget.getContext()) * 2;
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-        taboolaWidget.setLayoutParams(params);
-taboolaWidget.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-       // frameLayout.addView(taboolaWidget);
-        layout.addView(taboolaWidget);
+                @Override
+                public void onCastingStarted() {
 
-        taboolaWidget.setPublisher("zeemedia-zeenewsenglishandroid")
-                .setMode("thumbs-feed-01")
-                .setPlacement("Below Article Thumbnails")
-                .setPageUrl("https://zeenews.india.com/other-sports/neeraj-chopra-gained-close-to-12-kgs-after-olympics-gold-says-he-has-lost-5-kgs-in-last-three-weeks-2423883.html")
-                .setPageType("article")
-                .setTargetType("mix");
-//fetch the content
-        taboolaWidget.fetchContent();
-        Log.d("testt", " " + taboolaWidget.setPublisher("zeemedia-zeenewsenglishandroid"));
+                }
 
-       // Taboola End
-    */
+                @Override
+                public void onCastingEnded() {
 
-        //  getPubmatics(context);
+                }
 
+                @Override
+                public void onChangingPlayerMode(boolean isPlayingVideo) {
 
-        //  getYoubora(context);
+                    //Toast.makeText(ActivityLiveTvVideoNew.this, "IsPlayingVideo: "+isPlayingVideo, Toast.LENGTH_SHORT).show();
+                }
+
+            });
+        }
+
 
     }
 
+   /* private VidgyorYouboraModel createyouboraModel(){
+        VidgyorYouboraModel
+                vidgyorYouboraModel=new
+                VidgyorYouboraModel();
+
+       // if (!TextUtils.isEmpty(ZeeFireBaseUtils.getYouboraAccountCode())) {
+//            vidgyorYouboraModel.setAccountCode("youboraAccountCode");
+//        } else {
+            vidgyorYouboraModel.setAccountCode("zeenews");
+    //    }
+
+        vidgyorYouboraModel.setAppName("Zee Business");
+
+        vidgyorYouboraModel.setAppVersion(BuildConfig.VERSION_NAME);
+
+        vidgyorYouboraModel.setLanguage("English");
+
+        vidgyorYouboraModel.setWebsiteUrl("https://www.zeebiz.com");
+
+        return vidgyorYouboraModel;
+    }*/
+
     @Override
     public View getView() {
-        return lin_lay;
+        return rel_lay;
     }
 
     @Override
     public void dispose() {
     }
 
+    private VidgyorYouboraModel createyouboraModel() {
+        VidgyorYouboraModel
+                vidgyorYouboraModel = new
+                VidgyorYouboraModel();
+
+
+        vidgyorYouboraModel.setAccountCode("zeenews");
+        //   }
+
+        vidgyorYouboraModel.setAppName("Zee News");
+
+        vidgyorYouboraModel.setAppVersion("2.3.0");
+
+//        if (ZeeNewsApplication.getInstance() != null && ZeeNewsApplication.getInstance().myChannel != null && ZeeNewsApplication.getInstance().myChannel.getLanguageName() != null) {
+//            vidgyorYouboraModel.setLanguage(ZeeNewsApplication.getInstance().myChannel.getLanguageName());
+//        } else {
+        vidgyorYouboraModel.setLanguage("English");
+        //  }
+        vidgyorYouboraModel.setWebsiteUrl("https://zeenews.india.com/");
+
+        return vidgyorYouboraModel;
+    }
+
+    public static String getVidgyorLiveTVChannelId(Context context, String channelName) {
+        String channelNameId = context.getString(R.string.vid_channel_id_english);
+        switch (channelName) {
+            case "English":
+                channelNameId = context.getString(R.string.vid_channel_id_english);
+                break;
+
+        }
+        return channelNameId;
+    }
 
 }

@@ -32,8 +32,8 @@ class SecondRoute extends StatefulWidget {
 
 class _MyAppState extends State<SecondRoute> {
   late Future<ArticleDetail> futureArticleDetail;
-  late String methodChannelValue ;
-  static const methodChannel = MethodChannel('Gaurav');
+ // late String methodChannelValue ;
+ // static const methodChannel = MethodChannel('Gaurav');
   // late String? id;
   // late final Article item;
 
@@ -42,18 +42,18 @@ class _MyAppState extends State<SecondRoute> {
   void initState() {
     super.initState();
 
-    methodChannelValue = 'not initiated';
+   // methodChannelValue = 'not initiated';
 
     futureArticleDetail = client.fetchArticleDetail(widget.articleId);
   }
 
   Future<void> intiMethodChannel() async {
-  String? retrunedValue = await methodChannel.invokeMethod<String>('getUserName');
-  if(retrunedValue != null) {
+ // String? retrunedValue = await methodChannel.invokeMethod<String>('getUserName');
+ /* if(retrunedValue != null) {
     setState(() {
       methodChannelValue = retrunedValue;
     });
-  }
+  }*/
   }
 // class DetailsScreen extends StatelessWidget {
 //   final String tag;
@@ -290,8 +290,8 @@ class _MyAppState extends State<SecondRoute> {
                                   ),
                                        Column(
                                          children: [
-                                           Text(methodChannelValue,style:
-                                           Theme.of(context).textTheme.subtitle1,),
+                                          // Text(methodChannelValue,style:
+                                          // Theme.of(context).textTheme.subtitle1,),
                                            ElevatedButton(
                                                onPressed:intiMethodChannel,
                                                child: Text('click to call'))

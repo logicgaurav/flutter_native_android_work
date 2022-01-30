@@ -86,7 +86,13 @@ dependencies {
     //Youbora
     implementation "com.nicepeopleatwork:exoplayer-adapter:6.7.9-alpha4"
 
-
+//Retrofit for vidgyor
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation files('libs/vidgyor-livemidroll-zeenews-13122021.aar')
+    implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.android.gms:play-services-analytics:18.0.1'
 
 
 }

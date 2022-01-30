@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:customAtt="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel_lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/vid_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/black"
+        android:keepScreenOn="true"
+        app:controller_layout_id="@layout/vidgyor_exo_playback_control_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:use_controller="true" />
+
+    <LinearLayout
+        android:id="@+id/sharelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:padding="5dp">
+        <LinearLayout
+            android:id="@+id/liveTv_sharelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shap_white_rounded_rectangle_transprent_bg"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/shareImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cancel" />
+
+            <TextView
+                android:id="@+id/shareTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="6dp"
+                android:text="Share"
+                android:textColor="#99ffffff"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
