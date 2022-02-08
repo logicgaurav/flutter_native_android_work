@@ -84,9 +84,11 @@ dependencies {
     implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.5.0'
 
     //Youbora
-    implementation "com.nicepeopleatwork:exoplayer-adapter:6.7.9-alpha4"
+    implementation "com.nicepeopleatwork:exoplayer-adapter:6.7.27"
 
 
 
 
 }
+
+apply from: "https://bitbucket.org/!api/2.0/snippets/npaw/yAk85G/files/exoplayer2-adapter-android-picker"
